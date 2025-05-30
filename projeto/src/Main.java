@@ -1,15 +1,31 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        JFrame janela = new JFrame("Face 3D - Java2D");
+        Renderizacao painel = new Renderizacao();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        janela.setSize(600, 600);
+        janela.setContentPane(painel);
+        janela.setVisible(true);
+
+        // Thread de animação (poderia fazer rotação)
+        new Thread(() -> {
+            double angulo = 0;
+            while (true) {
+                painel.atualizarFace(angulo);
+                painel.repaint();
+
+                angulo += 2;
+                if (angulo >= 360) angulo = 0;
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }).start();
     }
 }
