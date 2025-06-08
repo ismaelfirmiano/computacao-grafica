@@ -1,27 +1,28 @@
 public class FileReader {
 
+
     public Objeto createObject() {
 
         Objeto meuObjeto = new Objeto();
 
-        Vertice v1 = new Vertice('a', 3, 20, 0);
-        Vertice v2 = new Vertice('b', 7, 20, 0);
-        Vertice v3 = new Vertice('c', 9, 20, 5);
-        Vertice v4 = new Vertice('d', 7, 20, 10);
-        Vertice v5 = new Vertice('e', 3, 20, 10);
-        Vertice v6 = new Vertice('f', 1, 20, 5);
-        Vertice v7 = new Vertice('g', 2, 10, 0);
-        Vertice v8 = new Vertice('h', 8, 10, 0);
-        Vertice v9 = new Vertice('i', 10, 10, 5);
-        Vertice v10 = new Vertice('j', 8, 10, 10);
-        Vertice v11 = new Vertice('k', 2, 10, 10);
-        Vertice v12 = new Vertice('l', 0, 10, 5);
-        Vertice v13 = new Vertice('m', 3, 0, 0);
-        Vertice v14 = new Vertice('n', 7, 0, 0);
-        Vertice v15 = new Vertice('o', 9, 0, 5);
-        Vertice v16 = new Vertice('p', 7, 0, 10);
-        Vertice v17 = new Vertice('q', 3, 0, 10);
-        Vertice v18 = new Vertice('r', 1, 0, 5);
+        Vertice v1 = new Vertice('a', 30, 200, 0);
+        Vertice v2 = new Vertice('b', 70, 200, 0);
+        Vertice v3 = new Vertice('c', 90, 200, 50);
+        Vertice v4 = new Vertice('d', 70, 200, 100);
+        Vertice v5 = new Vertice('e', 30, 200, 100);
+        Vertice v6 = new Vertice('f', 10, 200, 50);
+        Vertice v7 = new Vertice('g', 20, 100, 0);
+        Vertice v8 = new Vertice('h', 80, 100, 0);
+        Vertice v9 = new Vertice('i', 100, 100, 50);
+        Vertice v10 = new Vertice('j', 80, 100, 100);
+        Vertice v11 = new Vertice('k', 20, 100, 100);
+        Vertice v12 = new Vertice('l', 0, 100, 50);
+        Vertice v13 = new Vertice('m', 30, 0, 0);
+        Vertice v14 = new Vertice('n', 70, 0, 0);
+        Vertice v15 = new Vertice('o', 90, 0, 5);
+        Vertice v16 = new Vertice('p', 70, 0, 100);
+        Vertice v17 = new Vertice('q', 30, 0, 100);
+        Vertice v18 = new Vertice('r', 10, 0, 50);
 
 
 

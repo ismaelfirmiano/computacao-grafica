@@ -15,6 +15,10 @@ public class Face {
 
     }
 
+    public List<Vertice> getVertices() {
+        return vertices;
+    }
+
     public void addAresta(Aresta aresta) {
 
         arestas.add(aresta);
