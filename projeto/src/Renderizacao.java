@@ -47,11 +47,11 @@ class Renderizacao extends JPanel {
 
 
             for (Face face : objeto.getFaces()) {
-                //if (estaDeFrente(face)) {
+                if (estaDeFrente(face)) {
                     List<Vertice> vertices = face.getContorno();
                     g2.setColor(face.getCor() != null ? face.getCor() : Color.GRAY);
                     desenharFace(g2, face);
-                //}
+                }
             }
         }
 

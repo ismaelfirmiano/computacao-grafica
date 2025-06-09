@@ -14,10 +14,11 @@ public class Main {
 
 
         Renderizacao painel = new Renderizacao(new String[]{"src/Objetos/escada.txt", "src/Objetos/matheus.txt"});
+        //Renderizacao painel = new Renderizacao(new String[]{"src/Objetos/escada.txt"});
 
 
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janela.setSize(600, 600);
+        janela.setSize(1000, 800);
         janela.setContentPane(painel);
         janela.setVisible(true);
 

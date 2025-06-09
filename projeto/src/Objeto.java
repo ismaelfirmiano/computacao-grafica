@@ -64,6 +64,7 @@ public class Objeto {
             p.setZ(novoZ);
         }
 
+
         for (Face f :faces) {
             f.setNormal(Vetor.calcularNormal(f));
         }
