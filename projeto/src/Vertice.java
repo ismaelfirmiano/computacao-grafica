@@ -1,25 +1,15 @@
 public class Vertice {
 
-    private char id;
     private double x;
     private double y;
     private double z;
 
-    public Vertice(char id, double x, double y, double z) {
+    public Vertice(double x, double y, double z) {
 
-        this.id = id;
         this.x = x;
         this.y = y;
         this.z = z;
 
-    }
-
-    public char getId() {
-        return id;
-    }
-
-    public void setId(char id) {
-        this.id = id;
     }
 
     public double getX() {

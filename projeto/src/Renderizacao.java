@@ -1,62 +1,94 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 
 class Renderizacao extends JPanel {
-    List<Ponto> face1;
-    Objeto balaoHex;
-    public Renderizacao() {
+    List<Objeto> objetos;
 
-        FileReader file = new FileReader();
-        balaoHex = file.createObject();
+    private double mediaZ(Face face) {
+        return face.getContorno().stream().mapToDouble(Vertice::getZ).average().orElse(0);
+    }
 
+    private boolean estaDeFrente(Face face) {
+        Vetor normal = face.getNormal();
+        if (normal == null) return true; // Se não tiver normal, desenha mesmo assim
 
+        // Vetor do observador (sentido da câmera): no caso mais simples, em -Z
+        Vetor direcaoCamera = new Vetor(0, 0, -1);
 
-        // Define uma face com 4 vértices (quadrado no plano XY)
-        face1 = Arrays.asList(
-                new Ponto(-50, -50, 0),
-                new Ponto(50, -50, 0),
-                new Ponto(50, 50, 0),
-                new Ponto(-50, 50, 0)
-        );
+        double produtoEscalar = normal.getX() * direcaoCamera.getX()
+                + normal.getY() * direcaoCamera.getY()
+                + normal.getZ() * direcaoCamera.getZ();
+
+        return produtoEscalar < 0; // Se menor que 0, está voltada para a câmera
+    }
+
+    public Renderizacao(String[] nome) {
+        objetos = new ArrayList<>(); // INICIALIZA AQUI
+        for (String n : nome) {
+            objetos.add(ObjetoFactory.criarObjetoDeArquivo(n));
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(0).getVertices() , Color.BLUE);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(1).getVertices() , Color.RED);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(2).getVertices() , Color.BLACK);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(3).getVertices() , Color.GREEN);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(4).getVertices() , Color.PINK);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(5).getVertices() , Color.ORANGE);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(6).getVertices() , Color.GRAY);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(7).getVertices() , Color.CYAN);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(8).getVertices() , Color.MAGENTA);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(9).getVertices() , Color.YELLOW);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(10).getVertices() , Color.BLUE);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(11).getVertices() , Color.GREEN);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(12).getVertices() , Color.PINK);
-        desenharFace((Graphics2D) g, balaoHex.getFaces().get(13).getVertices() , Color.BLACK);
+        Graphics2D g2 = (Graphics2D) g;
+
+        for(Objeto objeto : objetos){
+            objeto.getFaces().sort((f1, f2) -> {
+                double z1 = mediaZ(f1);
+                double z2 = mediaZ(f2);
+                return Double.compare(z2, z1); // Desenha primeiro as mais "distantes"
+            });
+
+
+            for (Face face : objeto.getFaces()) {
+                //if (estaDeFrente(face)) {
+                    List<Vertice> vertices = face.getContorno();
+                    g2.setColor(face.getCor() != null ? face.getCor() : Color.GRAY);
+                    desenharFace(g2, face);
+                //}
+            }
+        }
+
+
+       // desenharFace((Graphics2D) g, balaoHex.getFaces().get(0).getVertices() , Color.BLUE);
 
 
     }
 
-    private void desenharFace(Graphics2D g2, List<Vertice> face, Color cor) {
-        int n = face.size();
-        int[] xPoints = new int[n];
-        int[] yPoints = new int[n];
+    private void desenharFace(Graphics2D g2, Face face) {
+        List<Vertice> contorno = face.getContorno();
+        List<List<Vertice>> buracos = face.getBuracos();
 
-        for (int i = 0; i < n; i++) {
-            // Projeção simples: ignora z
-            xPoints[i] = (int) face.get(i).getX() + getWidth() / 2;
-            yPoints[i] = (int) -face.get(i).getY() + getHeight() / 2; // Inverte y
+        // Projeção dos vértices do contorno
+        Polygon contornoPoly = new Polygon();
+        for (Vertice v : contorno) {
+            int x = (int) v.getX() + getWidth() / 2;
+            int y = (int) -v.getY() + getHeight() / 2;
+            contornoPoly.addPoint(x, y);
         }
 
-        g2.setColor(cor);
-        g2.fillPolygon(xPoints, yPoints, n);
+        Area areaFinal = new Area(contornoPoly);
+
+        // Subtrair os buracos da face
+        if (buracos != null) {
+            for (List<Vertice> buraco : buracos) {
+                Polygon buracoPoly = new Polygon();
+                for (Vertice v : buraco) {
+                    int x = (int) v.getX() + getWidth() / 2;
+                    int y = (int) -v.getY() + getHeight() / 2;
+                    buracoPoly.addPoint(x, y);
+                }
+                areaFinal.subtract(new Area(buracoPoly));
+            }
+        }
+
+        g2.fill(areaFinal);
     }
 
     private void desenharVertices(Graphics2D g2, List<Vertice> face, Color cor) {
@@ -85,16 +117,9 @@ class Renderizacao extends JPanel {
         }
     }
 
-    public void atualizarFace(double angulo) {
-        double rad = Math.toRadians(angulo);
-        double cos = Math.cos(rad);
-        double sin = Math.sin(rad);
-
-        for (Ponto p : face1) {
-            double x = p.x, y = p.y;
-            // Rotação em torno do Z
-            p.x = x * cos - y * sin;
-            p.y = x * sin + y * cos;
+    public void rotacionar(double angulo) {
+        for(Objeto obj : objetos){
+            obj.rotacionar(angulo);
         }
     }
 }

@@ -1,43 +1,39 @@
-import java.util.ArrayList;
+import java.awt.*;
 import java.util.List;
 
 public class Face {
-    private String nome;
-    private List<Aresta> arestas;
-    private List<Vertice> vertices;
-    private Ponto normal;
+    private List<Vertice> contorno;
+    private List<List<Vertice>> buracos;
+    private Vetor normal = new Vetor(0, 0, 0);
+    private Color cor;
 
-    public Face(String nome) {
-
-        this.nome = nome;
-        this.arestas = new ArrayList<>();
-        this.vertices = new ArrayList<>();
-
+    public Face(List<Vertice> vetices, List<List<Vertice>> buracos, Color cor) {
+        this.contorno = vetices;
+        this.buracos = buracos;
+        this.cor = cor;
     }
 
-    public List<Vertice> getVertices() {
-        return vertices;
+    public Vetor getNormal() {
+        return normal;
     }
 
-    public void addAresta(Aresta aresta) {
-
-        arestas.add(aresta);
-
-
+    public void setCor(Color cor) {
+        this.cor = cor;
     }
 
-    public void addVertice(Vertice vertice) {
-
-        vertices.add(vertice);
-
+    public Color getCor() {
+        return cor;
     }
 
-    public String getNome(){
-            return nome;
-
+    public List<Vertice> getContorno() {
+        return contorno;
     }
-    public void setNome(String nome){
-        this.nome = nome;
 
+    public void setNormal(Vetor normal) {
+        this.normal = normal;
+    }
+
+    public List<List<Vertice>> getBuracos() {
+        return buracos;
     }
 }
