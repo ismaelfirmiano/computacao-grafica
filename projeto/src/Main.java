@@ -13,7 +13,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
 
-        Renderizacao painel = new Renderizacao(new String[]{"src/Objetos/escada.txt", "src/Objetos/matheus.txt"});
+        Renderizacao painel = new Renderizacao(new String[]{"/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/escada.txt",
+                "/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/matheus.txt"});
         //Renderizacao painel = new Renderizacao(new String[]{"src/Objetos/escada.txt"});
 
 
