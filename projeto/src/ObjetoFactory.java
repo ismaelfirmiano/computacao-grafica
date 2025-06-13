@@ -55,23 +55,23 @@ public class ObjetoFactory {
 
                 linha = br.readLine();
 
-                int b = Integer.parseInt(linha.split(" ")[0]);
+                int matiz = Integer.parseInt(linha.split(" ")[0]);
 
                 List<List<Vertice>> buracos = new ArrayList<>();
-                for (int j = 0; j < b; j++) {
-                    List<Vertice> buraco = new ArrayList<>();
+//                for (int j = 0; j < b; j++) {
+//                    List<Vertice> buraco = new ArrayList<>();
+//
+//                    linha = br.readLine();
+//                    dados = linha.split(" ");
+//
+//                    for(String dado : dados){
+//                        buraco.add(vertices.get(Integer.parseInt(dado)-1));
+//                    }
+//
+//                    buracos.add(buraco);
+//                }
 
-                    linha = br.readLine();
-                    dados = linha.split(" ");
-
-                    for(String dado : dados){
-                        buraco.add(vertices.get(Integer.parseInt(dado)-1));
-                    }
-
-                    buracos.add(buraco);
-                }
-
-                faces.add(new Face(faceVertices, buracos, Color.cyan));
+                faces.add(new Face(faceVertices, buracos, matiz));
 
             }
 

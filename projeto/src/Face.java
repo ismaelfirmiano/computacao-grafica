@@ -1,16 +1,18 @@
 import java.awt.*;
 import java.util.List;
 
+
 public class Face {
     private List<Vertice> contorno;
     private List<List<Vertice>> buracos;
     private Vetor normal = new Vetor(0, 0, 0);
+    private int matiz = 0;
     private Color cor;
 
-    public Face(List<Vertice> vetices, List<List<Vertice>> buracos, Color cor) {
+    public Face(List<Vertice> vetices, List<List<Vertice>> buracos, int matiz) {
         this.contorno = vetices;
         this.buracos = buracos;
-        this.cor = cor;
+        this.matiz = matiz;
     }
 
     public Vetor getNormal() {
@@ -35,5 +37,10 @@ public class Face {
 
     public List<List<Vertice>> getBuracos() {
         return buracos;
+    }
+
+    public void iluminar(Vetor vetor) {
+        double cos = Math.max(0.5, 0.49+(vetor.produtoEscalar(normal)/2.0));
+        setCor(Color.getHSBColor(matiz, 1, (float) cos));
     }
 }

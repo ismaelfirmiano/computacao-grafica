@@ -53,6 +53,7 @@ public class Objeto {
         double cos = Math.cos(rad);
         double sin = Math.sin(rad);
 
+        // EIXO Y
         for (Vertice p : vertices) {
             double x = p.getX();
             double z = p.getZ();
@@ -64,6 +65,18 @@ public class Objeto {
             p.setZ(novoZ);
         }
 
+        // EIXO X
+        for (Vertice p : vertices) {
+            double y = p.getY();
+            double z = p.getZ();
+
+            double novoY = y * cos + z * sin;
+            double novoZ = -y * sin + z * cos;
+
+            p.setY(novoY);
+            p.setZ(novoZ);
+        }
+
 
         for (Face f :faces) {
             f.setNormal(Vetor.calcularNormal(f));
@@ -72,6 +85,11 @@ public class Objeto {
 
     }
 
+    public void iluminar(Vetor luz) {
+        for (Face f : faces) {
+            f.iluminar(luz);
+        }
+    }
     public int getTam() {
         return faces.size();
     }

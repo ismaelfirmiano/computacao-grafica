@@ -7,7 +7,7 @@ import java.util.List;
 
 class Renderizacao extends JPanel {
     List<Objeto> objetos;
-
+    Vetor luz = new Vetor(1,-1, 1).normalizado();
     private double mediaZ(Face face) {
         return face.getContorno().stream().mapToDouble(Vertice::getZ).average().orElse(0);
     }
@@ -48,7 +48,7 @@ class Renderizacao extends JPanel {
 
             for (Face face : objeto.getFaces()) {
                 if (estaDeFrente(face)) {
-                    List<Vertice> vertices = face.getContorno();
+                    //List<Vertice> vertices = face.getContorno();
                     g2.setColor(face.getCor() != null ? face.getCor() : Color.GRAY);
                     desenharFace(g2, face);
                 }
@@ -120,6 +120,9 @@ class Renderizacao extends JPanel {
     public void rotacionar(double angulo) {
         for(Objeto obj : objetos){
             obj.rotacionar(angulo);
+        }
+        for(Objeto obj : objetos){
+            obj.iluminar(luz);
         }
     }
 }

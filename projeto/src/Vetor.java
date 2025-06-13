@@ -9,6 +9,12 @@ public class Vetor {
         this.z = z;
     }
 
+    public Vetor normalizado() {
+        double comprimento = Math.sqrt(x * x + y * y + z * z);
+        if (comprimento == 0) return new Vetor(0, 0, 0);
+        return new Vetor(x / comprimento, y / comprimento, z / comprimento);
+    }
+
     public static Vetor calcularNormal(Face face) {
         List<Vertice> contorno = face.getContorno();
 
@@ -35,7 +41,7 @@ public class Vetor {
         double comprimento = Math.sqrt(nx * nx + ny * ny + nz * nz);
         if (comprimento == 0) comprimento = 1;
 
-        return new Vetor(nx / comprimento, ny / comprimento, nz / comprimento);
+        return new Vetor(nx, ny, nz).normalizado();
     }
 
     public double getX() {
@@ -48,5 +54,9 @@ public class Vetor {
 
     public double getZ() {
         return z;
+    }
+
+    public double produtoEscalar(Vetor vetor) {
+        return x * vetor.getX() + y * vetor.getY() + z * vetor.getZ();
     }
 }
