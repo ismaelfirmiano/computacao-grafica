@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Vetor {
-    private double x, y, z;
+    private final double x, y, z;
 
     public Vetor(double x, double y, double z) {
         this.x = x;

@@ -1,14 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.util.List;
 
 
 class CenaLuz extends JPanel {
-    private List<Objeto> objetos;
-    private Vetor luz;
-    private Vetor camera;
+    private final List<Objeto> objetos;
+    private final Vetor luz;
+    private final Vetor camera;
 
     public CenaLuz(List<Objeto> objetos, Vetor luz, Vetor camera) {
         this.objetos = objetos;
@@ -70,7 +69,7 @@ class CenaLuz extends JPanel {
         if (contorno == null || contorno.isEmpty()) return;
 
         Path2D area = new Path2D.Double();
-        Vertice primeiro = contorno.get(0);
+        Vertice primeiro = contorno.getFirst();
         area.moveTo(primeiro.getX() + getWidth() / 2.0, -primeiro.getY() + getHeight() / 2.0);
 
         for (int i = 1; i < contorno.size(); i++) {

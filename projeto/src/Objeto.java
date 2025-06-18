@@ -1,10 +1,8 @@
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Objeto {
-    private List<Vertice> vertices;
-    private List<Face> faces;
+    private final List<Vertice> vertices;
+    private final List<Face> faces;
 
     public Objeto(List<Vertice> vertices, List<Face> faces) {
         this.vertices = vertices;

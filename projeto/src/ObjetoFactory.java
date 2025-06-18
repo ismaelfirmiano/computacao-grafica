@@ -1,8 +1,6 @@
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +44,6 @@ public class ObjetoFactory {
             return new Objeto(vertices, faces);
 
         } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
             return null;
         }
 

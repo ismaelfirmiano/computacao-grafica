@@ -1,11 +1,10 @@
-import java.awt.*;
 import java.util.List;
 
 
 public class Face {
-    private List<Vertice> contorno;
+    private final List<Vertice> contorno;
     private Vetor normal = new Vetor(0, 0, 0);
-    private int matiz = 0;
+    private int matiz;
 
     public Face(List<Vertice> vetices) {
         this.contorno = vetices;
