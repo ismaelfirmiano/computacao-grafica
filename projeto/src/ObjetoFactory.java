@@ -29,19 +29,6 @@ public class ObjetoFactory {
             }
 
 
-            /*
-            List<Aresta> arestas = new ArrayList<>();
-            for (int i = 0; i < a; i++) {
-                linha = br.readLine();
-                dados = linha.split(" ");
-
-                int x = Integer.parseInt(dados[0]);
-                int y = Integer.parseInt(dados[1]);
-
-                arestas.add(new Aresta(vertices.get(x), vertices.get(y)));
-            }
-            */
-
             List<Face> faces = new ArrayList<>();
             for (int i = 0; i < f; i++) {
                 linha = br.readLine();
@@ -53,26 +40,7 @@ public class ObjetoFactory {
                     faceVertices.add(vertices.get(Integer.parseInt(dado)-1));
                 }
 
-                linha = br.readLine();
-
-                int matiz = Integer.parseInt(linha.split(" ")[0]);
-
-                List<List<Vertice>> buracos = new ArrayList<>();
-//                for (int j = 0; j < b; j++) {
-//                    List<Vertice> buraco = new ArrayList<>();
-//
-//                    linha = br.readLine();
-//                    dados = linha.split(" ");
-//
-//                    for(String dado : dados){
-//                        buraco.add(vertices.get(Integer.parseInt(dado)-1));
-//                    }
-//
-//                    buracos.add(buraco);
-//                }
-
-                faces.add(new Face(faceVertices, buracos, matiz));
-
+                faces.add(new Face(faceVertices));
             }
 
             return new Objeto(vertices, faces);

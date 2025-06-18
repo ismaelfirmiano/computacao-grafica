@@ -1,78 +1,66 @@
 import javax.swing.*;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
-    public static void menu(){
-        System.out.println("1 - MATRIZ");
-    }
-
     public static void main(String[] args) {
+
         JFrame janela = new JFrame("Face 3D - Java2D");
-        Scanner scanner = new Scanner(System.in);
+        List<Objeto> objetos = new ArrayList<>();
 
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/ismael.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/matheus.txt"));
 
-        //Renderizacao painel = new Renderizacao(new String[]{"src/Objetos/ismael.txt",
-                //"src/Objetos/matheus.txt"});
-        Renderizacao painel = new Renderizacao(new String[]{"src/Objetos/matheus.txt"});
-
+        CenaLuz cena = new CenaLuz(
+                objetos,
+                new Vetor(1,-1, 1).normalizado(),
+                new Vetor(0, 0, -1).normalizado()
+        );
 
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela.setSize(1000, 800);
-        janela.setContentPane(painel);
+        janela.setContentPane(cena);
         janela.setVisible(true);
 
 
-        double[][] matriz = {{2, 0, 0, 0}, {0, 2, 0, 0}, {0, 0, 2, 0}, {0, 0, 0, 1}};
-        painel.objetos.get(0).aplicarTransformacao(matriz);
-
-        //int i = scanner.nextInt();
-        //double[][] matriz = {{-25, 0, 0, 0}, {0, -25, 0, 0}, {0, 0, 25, 0}, {0, 0, 0, 1}};
-        //painel.objetos.get(0).aplicarTransformacao(matriz);
-
-        // Thread de animação (poderia fazer rotação)
-        new Thread(() -> {
-            double angulo = 0.01;
-            while (true) {
-                painel.rotacionar(angulo);
-                painel.repaint();
-
-
-                if (angulo >= 360) angulo = 0;
-
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    break;
+        objetos.get(0).multiplicaMatriz(
+                new double[][]{
+                        {-25, 0, 0, 0},
+                        {0, -25, 0, 0},
+                        {0, 0, 25, 0},
+                        {0, 0, 0, 1}
                 }
-            }
-        }).start();
+        );
 
-//        new Thread(() -> {
-//
-//            int i = 0;
-//            while (true) {
-//                for(Objeto obj : painel.objetos) {
-//                    obj.colorir((float) i /obj.getTam());
-//                }
-//
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    break;
-//                }
-//                i++;
-//            }
-//        }).start();
+        objetos.get(1).multiplicaMatriz(
+                new double[][]{
+                        {2, 0, 0, 0},
+                        {0, 2, 0, 0},
+                        {0, 0, 2, 0},
+                        {0, 0, 0, 1}
+                }
+        );
 
+        for (Face face : objetos.get(0).getFaces()) {
+            face.setMatiz(0);
+        }
 
-        //int x;
+        for (Face face : objetos.get(1).getFaces()) {
+            face.setMatiz(180);
+        }
 
-        //System.out.println("Cor inicial (0-360): ");
-        //float cor = scanner.nextFloat();
-        //painel.objeto.colorir(cor/360);
+        Timer timer = new Timer(1, e -> {
 
+            objetos.get(0).rotacionarX(0.01);
+            objetos.get(0).rotacionarY(0.01);
+            objetos.get(1).rotacionarX(0.02);
+            objetos.get(1).rotacionarY(0.02);
+
+            cena.repaint();
+        });
+
+        timer.start();
 
     }
 

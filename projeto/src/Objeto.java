@@ -3,29 +3,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Objeto {
-    List<Vertice> vertices;
-    List<Face> faces;
+    private List<Vertice> vertices;
+    private List<Face> faces;
 
     public Objeto(List<Vertice> vertices, List<Face> faces) {
         this.vertices = vertices;
         this.faces = faces;
     }
 
-    public void colorir(float primeira){
-        int n = faces.size();
-        for (int i = 0; i < n; i++) {
-            float hue = (i / (float) n) + primeira;
-            hue = hue % 1f;
-            Color cor = new Color(Color.HSBtoRGB(hue, 1f, 1f));
-            faces.get(i).setCor(cor);
-        }
-    }
-
     public List<Face> getFaces() {
         return faces;
     }
 
-    public void aplicarTransformacao(double[][] matriz) {
+    public void multiplicaMatriz(double[][] matriz) {
         for (Vertice v : vertices) {
             double[] original = {v.getX(), v.getY(), v.getZ(), 1};
             double[] novo = new double[4];
@@ -42,30 +32,16 @@ public class Objeto {
             v.setZ(novo[2]);
         }
 
-        // Recalcular normais depois da transformação
         for (Face f : faces) {
             f.setNormal(Vetor.calcularNormal(f));
         }
     }
 
-    public void rotacionar(double angulo) {
+    public void rotacionarX(double angulo) {
         double rad = Math.toRadians(angulo);
         double cos = Math.cos(rad);
         double sin = Math.sin(rad);
 
-        // EIXO Y
-        for (Vertice p : vertices) {
-            double x = p.getX();
-            double z = p.getZ();
-
-            double novoX = x * cos + z * sin;
-            double novoZ = -x * sin + z * cos;
-
-            p.setX(novoX);
-            p.setZ(novoZ);
-        }
-
-        // EIXO X
         for (Vertice p : vertices) {
             double y = p.getY();
             double z = p.getZ();
@@ -85,13 +61,27 @@ public class Objeto {
 
     }
 
-    public void iluminar(Vetor luz) {
-        for (Face f : faces) {
-            f.iluminar(luz);
+    public void rotacionarY(double angulo) {
+        double rad = Math.toRadians(angulo);
+        double cos = Math.cos(rad);
+        double sin = Math.sin(rad);
+
+        for (Vertice p : vertices) {
+            double x = p.getX();
+            double z = p.getZ();
+
+            double novoX = x * cos + z * sin;
+            double novoZ = -x * sin + z * cos;
+
+            p.setX(novoX);
+            p.setZ(novoZ);
         }
+
+        for (Face f :faces) {
+            f.setNormal(Vetor.calcularNormal(f));
+        }
+
     }
-    public int getTam() {
-        return faces.size();
-    }
+
 }
 

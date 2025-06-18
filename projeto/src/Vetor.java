@@ -16,6 +16,10 @@ public class Vetor {
     }
 
     public static Vetor calcularNormal(Face face) {
+
+        if(face == null)
+            return null;
+
         List<Vertice> contorno = face.getContorno();
 
         if (contorno.size() < 3) {
@@ -37,9 +41,6 @@ public class Vetor {
         double nx = uy * vz - uz * vy;
         double ny = uz * vx - ux * vz;
         double nz = ux * vy - uy * vx;
-
-        double comprimento = Math.sqrt(nx * nx + ny * ny + nz * nz);
-        if (comprimento == 0) comprimento = 1;
 
         return new Vetor(nx, ny, nz).normalizado();
     }
