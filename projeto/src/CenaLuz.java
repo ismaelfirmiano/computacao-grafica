@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,22 +43,23 @@ class CenaLuz extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+        List<Face> faces = new ArrayList<>();
         for(Objeto objeto : objetos){
+            faces.addAll(objeto.getFaces());
+        }
 
-            // Reordena para desenhar primeiro as mais "distantes"
-            objeto.getFaces().sort((f1, f2) -> {
-                double z1 = mediaZ(f1);
-                double z2 = mediaZ(f2);
-                return Double.compare(z2, z1);
-            });
+        faces.sort((f1, f2) -> {
+            double z1 = mediaZ(f1);
+            double z2 = mediaZ(f2);
+            return Double.compare(z2, z1);
+        });
 
-            // Se estiver de frente calcular a cor
-            for (Face face : objeto.getFaces()) {
-                if (deFrente(face)) {
-                    double cos = Math.max(0.5, 0.49+(luz.produtoEscalar(face.getNormal())/2.0));
-                    g2.setColor(Color.getHSBColor(face.getMatiz()/360f, 1, (float) cos));
-                    desenharFace(g2, face);
-                }
+        // Se estiver de frente calcular a cor
+        for (Face face : faces) {
+            if (deFrente(face)) {
+                double cos = Math.max(0.5, 0.49+(luz.produtoEscalar(face.getNormal())/2.0));
+                g2.setColor(Color.getHSBColor(face.getMatiz()/360f, 1, (float) cos));
+                desenharFace(g2, face);
             }
         }
 

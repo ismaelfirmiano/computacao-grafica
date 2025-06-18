@@ -41,6 +41,7 @@ public class Objeto {
         double sin = Math.sin(rad);
 
         for (Vertice p : vertices) {
+
             double y = p.getY();
             double z = p.getZ();
 
