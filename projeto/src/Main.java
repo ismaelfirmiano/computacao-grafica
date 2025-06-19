@@ -11,9 +11,9 @@ public class Main {
 
 
         // INSTANCIA OBJETOS A PARTIR DE ARQUIVOS
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/ismael.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/matheus.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/piramide.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/ismael.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/matheus.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/piramide.txt"));
 
         // DEFINA A MATIZ DE CADA OBJETO
         for (Face face : objetos.get(0).getFaces()) {

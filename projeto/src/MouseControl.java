@@ -28,7 +28,7 @@ public class MouseControl extends JPanel implements MouseListener, MouseMotionLi
 
         int dx = e.getX() - lastX;
         int dy = e.getY() - lastY;
-        rotY += dx * 0.001;
+        rotY += dx * -0.001;
         rotX += dy * 0.001;
         lastX = e.getX();
         lastY = e.getY();
@@ -36,10 +36,11 @@ public class MouseControl extends JPanel implements MouseListener, MouseMotionLi
 
     }
 
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseClicked(MouseEvent e) {
+    public void mouseReleased(MouseEvent e) {
         rotX = 0;
         rotY = 0;
+    }
+    public void mouseClicked(MouseEvent e) {
     }
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
