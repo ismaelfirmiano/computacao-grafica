@@ -9,10 +9,11 @@ public class Main {
         JFrame janela = new JFrame("Face 3D - Java2D");
         List<Objeto> objetos = new ArrayList<>();
 
+
         // INSTANCIA OBJETOS A PARTIR DE ARQUIVOS
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/ismael.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/matheus.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/piramide.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/ismael.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/matheus.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/piramide.txt"));
 
         // DEFINA A MATIZ DE CADA OBJETO
         for (Face face : objetos.get(0).getFaces()) {
@@ -36,6 +37,10 @@ public class Main {
         janela.setSize(1000, 800);
         janela.setContentPane(cena);
         janela.setVisible(true);
+
+        MouseControl rotator = new MouseControl(cena);
+        cena.addMouseListener(rotator);
+        cena.addMouseMotionListener(rotator);
 
         // APLICA TRANSFORMAÇÕES USANDO MULTIPLICAÇÃO DE MATRIZES
         objetos.get(0).multiplicaMatriz(
@@ -68,10 +73,17 @@ public class Main {
         final int[] t = {0};
         Timer timer = new Timer(1, e -> {
 
+            double rx;
+            double ry;
+
+            rx = rotator.getRotX();
+            ry = rotator.getRotY();
+
             for (Objeto objeto : objetos) {
 
-                objeto.rotacionarX(0.01);
-                objeto.rotacionarY(0.01);
+                objeto.rotacionarX(rx);
+                objeto.rotacionarY(ry);
+
             }
 
 
@@ -87,6 +99,7 @@ public class Main {
                 t[0] = 0;
             }
             t[0]++;
+
 
             cena.repaint();
         });
