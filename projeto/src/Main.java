@@ -11,9 +11,9 @@ public class Main {
 
 
         // INSTANCIA OBJETOS A PARTIR DE ARQUIVOS
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/ismael.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/balao.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/piramide.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/ismael.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/balao.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/piramide.txt"));
 
 
         // OBJETO RESPONSÁVEL POR DESENHAR NA TELA
