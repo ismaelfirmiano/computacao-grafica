@@ -38,7 +38,10 @@ public class ObjetoFactory {
                     faceVertices.add(vertices.get(Integer.parseInt(dado)-1));
                 }
 
-                faces.add(new Face(faceVertices));
+                linha = br.readLine();
+                String dado = linha.split(" ")[0];
+
+                faces.add(new Face(faceVertices, Integer.parseInt(dado)));
             }
 
             return new Objeto(vertices, faces);

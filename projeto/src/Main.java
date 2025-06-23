@@ -11,20 +11,10 @@ public class Main {
 
 
         // INSTANCIA OBJETOS A PARTIR DE ARQUIVOS
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/ismael.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/matheus.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/piramide.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/ismael.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/balao.txt"));
+        objetos.add(ObjetoFactory.criarObjetoDeArquivo("src/Objetos/piramide.txt"));
 
-        // DEFINA A MATIZ DE CADA OBJETO
-        for (Face face : objetos.get(0).getFaces()) {
-            face.setMatiz(0);
-        }
-        for (Face face : objetos.get(1).getFaces()) {
-            face.setMatiz(120);
-        }
-        for (Face face : objetos.get(2).getFaces()) {
-            face.setMatiz(240);
-        }
 
         // OBJETO RESPONSÁVEL POR DESENHAR NA TELA
         CenaLuz cena = new CenaLuz(
@@ -42,6 +32,18 @@ public class Main {
         cena.addMouseListener(rotator);
         cena.addMouseMotionListener(rotator);
 
+
+        // MATRIZ PARA DEIXAR UM HEXAGONO PERFEITO
+        objetos.get(1).multiplicaMatriz(
+                new double[][]{
+                        {1, 0, 0, 0},
+                        {0, 1, 0, 0},
+                        {0, 0, Math.sqrt(5)/2, 0},
+                        {0, 0, 0, 1}
+                }
+        );
+
+
         // APLICA TRANSFORMAÇÕES USANDO MULTIPLICAÇÃO DE MATRIZES
         objetos.get(0).multiplicaMatriz(
                 new double[][]{
@@ -53,11 +55,11 @@ public class Main {
         );
         objetos.get(1).multiplicaMatriz(
                 new double[][]{
-                        {2, 0, 0, 0},
-                        {0, 1, 0, 0},
-                        {0, 0, 2, 0},
-                        {0, 0, 0, 1}
-                }
+                {20, 0, 0, 0},
+                {0, 90, 0, 0},
+                {0, 0, 20, 0},
+                {0, 0, 0, 1}
+        }
         );
         objetos.get(2).multiplicaMatriz(
                 new double[][]{
@@ -69,8 +71,6 @@ public class Main {
         );
 
 
-
-        final int[] t = {0};
         Timer timer = new Timer(1, e -> {
 
             double rx;
@@ -85,20 +85,6 @@ public class Main {
                 objeto.rotacionarY(ry);
 
             }
-
-
-            // ISSO AQUI EU COLOQUEI PARA A MATIZ IR VARIANDO
-            if (t[0] > 100) {
-                for (Objeto objeto : objetos) {
-
-                    for (Face face : objeto.getFaces()) {
-                        face.setMatiz(face.getMatiz() + 1);
-                    }
-
-                }
-                t[0] = 0;
-            }
-            t[0]++;
 
 
             cena.repaint();

@@ -6,9 +6,9 @@ public class Face {
     private Vetor normal = new Vetor(0, 0, 0);
     private int matiz;
 
-    public Face(List<Vertice> vetices) {
+    public Face(List<Vertice> vetices, int matiz) {
         this.contorno = vetices;
-        this.matiz = 0;
+        this.matiz = matiz;
     }
 
     public List<Vertice> getContorno() {
