@@ -56,7 +56,7 @@ class CenaCurva extends JPanel {
 
         // Se estiver de frente calcular a cor
         for (Face face : faces) {
-            if (deFrente(face)) {
+            //if (deFrente(face)) {
                 Color corFinal;
                 if (face.getMaterial() != null && face.getMaterial().isPolido()) {
                     // Use a normal do primeiro vértice como uma aproximação para a face inteira
@@ -71,7 +71,7 @@ class CenaCurva extends JPanel {
                 }
                 g2.setColor(corFinal);
                 desenharFace(g2, face);
-            }
+            //}
         }
 
     }
@@ -91,10 +91,13 @@ class CenaCurva extends JPanel {
         double b_a = luz.corAmbiente.getBlue()  / 255.0 * mat.kA;
 
         // 2. Componente Difusa
-        double dot_ln = Math.max(0, L.produtoEscalar(N));
-        double r_d = (luz.corDifusa.getRed()   / 255.0 * corBase.getRed()   / 255.0) * mat.kD * dot_ln;
-        double g_d = (luz.corDifusa.getGreen() / 255.0 * corBase.getGreen() / 255.0) * mat.kD * dot_ln;
-        double b_d = (luz.corDifusa.getBlue()  / 255.0 * corBase.getBlue()  / 255.0) * mat.kD * dot_ln;
+        double pisoDeLuz = 0.15; // Garante pelo menos 15% de iluminação
+        double dot_ln = L.produtoEscalar(N);
+        double fatorIluminacao = Math.max(pisoDeLuz, dot_ln);
+
+        double r_d = (luz.corDifusa.getRed()   / 255.0 * corBase.getRed()   / 255.0) * mat.kD * fatorIluminacao; // Use fatorIluminacao aqui
+        double g_d = (luz.corDifusa.getGreen() / 255.0 * corBase.getGreen() / 255.0) * mat.kD * fatorIluminacao; // Use fatorIluminacao aqui
+        double b_d = (luz.corDifusa.getBlue()  / 255.0 * corBase.getBlue()  / 255.0) * mat.kD * fatorIluminacao; // Use fatorIluminacao aqui
 
         // 3. Componente Especular
         double r_s = 0, g_s = 0, b_s = 0;

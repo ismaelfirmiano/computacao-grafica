@@ -9,9 +9,24 @@ public class Main {
         JFrame janela = new JFrame("Face 3D - Java2D");
         List<Objeto> objetos = new ArrayList<>();
 
-        Objeto esferaPolida = SuperficieDeRevolucaoFactory.criarSuperficie(y -> 1.0, 30, 15, 200); // 200 = matiz azulado
-        objetos.add(esferaPolida);
+        //Objeto esferaPolida = SuperficieDeRevolucaoFactory.criarSuperficie(y -> 1.0, 30, 15, 200); // 200 = matiz azulado
+        //objetos.add(esferaPolida);
 
+        Vetor p0 = new Vetor(0.1, -1.5, 0);
+        Vetor p1 = new Vetor(1.5, -1.0, 0);
+        Vetor p2 = new Vetor(0.8,  1.0, 0);
+        Vetor p3 = new Vetor(1.0,  1.5, 0);
+
+        Bezier perfilVaso = new Bezier(p0, p1, p2, p3);
+
+        Objeto vasoPolido = SuperficieDeRevolucaoFactory.criarDeBezier(
+                perfilVaso,
+                100,
+                100,
+                25
+        );
+
+        objetos.add(vasoPolido);
 
         // OBJETO RESPONSÁVEL POR DESENHAR NA TELA
         CenaCurva cena = new CenaCurva(

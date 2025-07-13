@@ -4,15 +4,60 @@ import java.util.function.Function;
 
 public class SuperficieDeRevolucaoFactory {
 
-    /**
-     * Cria um objeto 3D girando uma curva 2D em torno do eixo Y.
-     *
-     * @param perfil Função que define o raio da superfície em uma dada altura y. Ex: y -> Math.sqrt(1 - y*y) para uma esfera.
-     * @param segmentosLongitude Número de fatias ao redor do eixo Y.
-     * @param segmentosLatitude  Número de anéis ao longo do eixo Y.
-     * @param matiz              Cor base da superfície.
-     * @return Um Objeto 3D representando a superfície de revolução.
-     */
+    public static Objeto criarDeBezier(Bezier perfil, int segmentosPerfil, int segmentosRevolucao, int matiz) {
+        List<Vertice> vertices = new ArrayList<>();
+        List<Face> faces = new ArrayList<>();
+
+        // Gerar Vértices
+        for (int i = 0; i <= segmentosPerfil; i++) {
+            double t = i / (double) segmentosPerfil; // t vai de 0 a 1
+
+            Vetor pontoPerfil = perfil.getPoint(t);
+            Vetor tangentePerfil = perfil.getTangent(t);
+
+            Vetor normalPerfil = new Vetor(-tangentePerfil.getY(), tangentePerfil.getX(), 0);
+
+            double raio = pontoPerfil.getX();
+            double y = pontoPerfil.getY();
+
+            for (int j = 0; j <= segmentosRevolucao; j++) {
+                double theta = 2 * Math.PI * j / (double) segmentosRevolucao; // Rotação
+                double cosTheta = Math.cos(theta);
+                double sinTheta = Math.sin(theta);
+
+                // Coordenadas do vértice 3D
+                double x3d = raio * cosTheta;
+                double z3d = raio * sinTheta;
+
+                Vertice v = new Vertice(x3d, y, z3d);
+
+                Vetor normal3d = new Vetor(normalPerfil.getX() * cosTheta, normalPerfil.getY(), normalPerfil.getX() * sinTheta);
+                v.setNormal(normal3d.normalizado());
+
+                vertices.add(v);
+            }
+        }
+
+        for (int i = 0; i < segmentosPerfil; i++) {
+            for (int j = 0; j < segmentosRevolucao; j++) {
+                int primeiro = i * (segmentosRevolucao + 1) + j;
+                int segundo = primeiro + segmentosRevolucao + 1;
+
+                List<Vertice> contornoFace = new ArrayList<>();
+                contornoFace.add(vertices.get(primeiro));
+                contornoFace.add(vertices.get(primeiro + 1));
+                contornoFace.add(vertices.get(segundo + 1));
+                contornoFace.add(vertices.get(segundo));
+
+                Face face = new Face(contornoFace, matiz);
+                face.setMaterial(new Material(true)); // Material polido
+                faces.add(face);
+            }
+        }
+
+        return new Objeto(vertices, faces);
+    }
+
     public static Objeto criarSuperficie(Function<Double, Double> perfil, int segmentosLongitude, int segmentosLatitude, int matiz) {
         List<Vertice> vertices = new ArrayList<>();
         List<Face> faces = new ArrayList<>();
