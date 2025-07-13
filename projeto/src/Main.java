@@ -9,17 +9,14 @@ public class Main {
         JFrame janela = new JFrame("Face 3D - Java2D");
         List<Objeto> objetos = new ArrayList<>();
 
-
-        // INSTANCIA OBJETOS A PARTIR DE ARQUIVOS
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/ismael.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/balao.txt"));
-        objetos.add(ObjetoFactory.criarObjetoDeArquivo("/home/matheus/IdeaProjects/computacao-grafica/projeto/src/Objetos/piramide.txt"));
+        Objeto esferaPolida = SuperficieDeRevolucaoFactory.criarSuperficie(y -> 1.0, 30, 15, 200); // 200 = matiz azulado
+        objetos.add(esferaPolida);
 
 
         // OBJETO RESPONSÁVEL POR DESENHAR NA TELA
-        CenaLuz cena = new CenaLuz(
+        CenaCurva cena = new CenaCurva(
                 objetos,
-                new Vetor(1,-1, 1).normalizado(), // LUZ
+                new Luz(new Vetor(1,-1, 1).normalizado()), // LUZ
                 new Vetor(0, 0, -1).normalizado() // CÂMERA
         );
 
@@ -33,43 +30,14 @@ public class Main {
         cena.addMouseMotionListener(rotator);
 
 
-        // MATRIZ PARA DEIXAR UM HEXAGONO PERFEITO
-        objetos.get(1).multiplicaMatriz(
-                new double[][]{
-                        {1, 0, 0, 0},
-                        {0, 1, 0, 0},
-                        {0, 0, Math.sqrt(5)/2, 0},
-                        {0, 0, 0, 1}
-                }
-        );
-
-
-        // APLICA TRANSFORMAÇÕES USANDO MULTIPLICAÇÃO DE MATRIZES
         objetos.get(0).multiplicaMatriz(
                 new double[][]{
-                        {-30, 0, 0, 0},
-                        {0, -30, 0, 0},
-                        {0, 0, 30, 0},
+                        {80, 0, 0, -150},
+                        {0, 80, 0, 0},
+                        {0, 0, 80, 0},
                         {0, 0, 0, 1}
                 }
         );
-        objetos.get(1).multiplicaMatriz(
-                new double[][]{
-                {20, 0, 0, 0},
-                {0, 90, 0, 0},
-                {0, 0, 20, 0},
-                {0, 0, 0, 1}
-        }
-        );
-        objetos.get(2).multiplicaMatriz(
-                new double[][]{
-                        {70, 0, 0, -200},
-                        {0, 70, 0, 50},
-                        {0, 0, 70, -70},
-                        {0, 0, 0, 1}
-                }
-        );
-
 
         Timer timer = new Timer(1, e -> {
 

@@ -45,6 +45,14 @@ public class Vetor {
         return new Vetor(nx, ny, nz).normalizado();
     }
 
+    public Vetor multiplica(double escalar) {
+        return new Vetor(x * escalar, y * escalar, z * escalar);
+    }
+
+    public Vetor subtrai(Vetor outro) {
+        return new Vetor(x - outro.x, y - outro.y, z - outro.z);
+    }
+
     public double getX() {
         return x;
     }

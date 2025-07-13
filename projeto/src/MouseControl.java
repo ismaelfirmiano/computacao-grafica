@@ -9,9 +9,9 @@ public class MouseControl extends JPanel implements MouseListener, MouseMotionLi
     double rotY = 0;
     int lastX, lastY;
 
-    private final CenaLuz target;
+    private final CenaCurva target;
 
-    public MouseControl(CenaLuz target) {
+    public MouseControl(CenaCurva target) {
         this.target = target;
     }
     public double getRotX() { return rotX; }

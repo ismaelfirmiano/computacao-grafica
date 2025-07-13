@@ -3,6 +3,7 @@ public class Vertice {
     private double x;
     private double y;
     private double z;
+    private Vetor normal;
 
     public Vertice(double x, double y, double z) {
 
@@ -11,6 +12,9 @@ public class Vertice {
         this.z = z;
 
     }
+
+    public Vetor getNormal() { return normal; }
+    public void setNormal(Vetor normal) { this.normal = normal; }
 
     public double getX() {
         return x;
